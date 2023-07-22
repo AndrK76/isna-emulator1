@@ -1,0 +1,20 @@
+tr.col-header {
+    text-align: center;
+}
+
+a.selected-page {}
+a.noselected-page {}
+
+.error-item {
+    color: crimson;
+    background-color: yellow;
+}
+
+body {
+    min-height: 15rem;
+    padding-top: 4.5rem;
+}
+
+.vh-90 {
+    height: 90vh !important;
+}

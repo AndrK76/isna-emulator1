@@ -1,0 +1,4 @@
+### WSDL
+GET http://localhost:8080/ws/messages.wsdl
+
+###

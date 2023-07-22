@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head th:include="fragments/general.html :: header(title='Главная')">
+    <title>Главная</title>
+</head>
+<body>
+
+<nav th:replace="fragments/general.html :: menu(page='index', mode='')">
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col text-center">
+            <h2>Эмулятор для отладки SOAP клиента ИСНА</h2>
+        </div>
+
+        <script>
+            const apiUrl = '/api/' + '[[${restApiVersion}]]';
+        </script>
+
+    </div>
+
+    <div class="row mb-3">
+        <div class="col">Адрес сервиса уведомления об открытии/закрытии и изменении счетов:</div>
+        <div class="col"><span class="fw-bold text-decoration-underline" th:text="${openCloseAddress}">http://none</span></div>
+    </div>
+    <div class="row mb-3">
+        <div class="col">Каталог для файлов настройки сервисов:</div>
+        <div class="col"><span class="fw-bold text-decoration-underline" th:text="proc_cfg">http://none</span></div>
+    </div>
+    <div class="row">
+        <div class="col col-auto">
+            <ul class="nav flex-column nav-underline">
+                <span class="nav-link active">Ресурсы:</span>
+                <li class="nav-item">
+                    <a class="nav-link link-dark" href="#" target="_blank" th:href="${openCloseWsdl}">
+                        WSDL сервиса уведомления об открытии/закрытии<br />и изменении счетов</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link link-dark" href="#" th:href="'/config/open-close'">
+                        Конфигурация сервиса уведомления об открытии/закрытии<br />и изменении счетов</a>
+                </li>
+                <!--<li class="nav-item">
+                    <a class="nav-link link-dark" href="#">
+                        Ресурсный файл настроек приложения</a>
+                </li>-->
+            </ul>
+        </div>
+        <div class="col"></div>
+        <div class="col col-auto">
+            <ul class="nav flex-column nav-underline">
+                <span class="nav-link active">Режимы:</span>
+                <li class="nav-item">
+                    <a class="nav-link link-dark" href="/list">
+                        Журналы обработанных данных</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link link-dark" href="/manage?mode=open-close">
+                        Управление сервисом открытии/закрытии<br />и изменении счетов</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col"></div>
+    </div>
+<div>
+
+</body>
+</html>

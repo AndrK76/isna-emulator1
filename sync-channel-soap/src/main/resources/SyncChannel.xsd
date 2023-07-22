@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+        targetNamespace="http://kgd.integration.gov.icode.kz/"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns="http://kgd.integration.gov.icode.kz/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <xsd:element name="SendMessage">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" name="request" type="Request"></xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xsd:element>
+
+    <xsd:element name="SendMessageResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="1" name="return" type="SyncSendMessageResponse">
+                    <xs:annotation>
+                        <xsd:documentation>Объект ответа</xsd:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xsd:element>
+
+    <xsd:element name="SendMessageFault1_SendMessageFault" nillable="true" type="ErrorInfo"/>
+
+
+    <xs:complexType name="Request">
+        <xs:sequence>
+            <xs:element minOccurs="1" name="requestInfo" type="RequestInfo">
+                <xs:annotation>
+                    <xs:documentation>Мета данные сообщения
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="1" name="requestData" type="RequestData">
+                <xs:annotation>
+                    <xs:documentation>Бизнес-данне сообщения</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="RequestInfo">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="messageId" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Идентификатор сообщения.
+                        Идентификатор сообщения генерируется ШЭП. Поэтому в случает отправки сообщения на ШЭП данное
+                        поле должно быть пустым. В случае когда сообщение передается получателю номер будет проставлен
+                        ШЭП.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="correlationId" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Идентификатор сообщения.
+                        Идентификатор сообщения генерируется ШЭП. Поэтому в случает отправки сообщения на ШЭП данное
+                        поле должно быть пустым. В случае когда сообщение передается получателю номер будет проставлен
+                        ШЭП.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="1" name="serviceId" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Идентификатор взаимодействия. По реестру сервисов ШЭП.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="1" name="messageDate" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation>Дата создания сообщения</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="1" name="sender" type="SenderInfo">
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="SenderInfo">
+        <xs:annotation>
+            <xs:documentation>Структура данных информации об отправителе</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="1" name="senderId" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Идентификатор отправителя (системы отправителя)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="password" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Пароль отправителя</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="Property">
+        <xs:annotation>
+            <xs:documentation>Тип данных своиство.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="1" name="key">
+                <xs:annotation>
+                    <xs:documentation>Ключ своиства</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:minLength value="0"/>
+                        <xs:maxLength value="30"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element minOccurs="1" name="value">
+                <xs:annotation>
+                    <xs:documentation>Значение своиства</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="500"/>
+                        <xs:minLength value="0"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="Guid">
+        <xs:annotation>
+            <xs:documentation>Оисание типа данных guid</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\{[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}\}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="RequestData">
+        <xs:annotation>
+            <xs:documentation>Структура для передачи бизнес данных сообщения</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <!--<xs:element minOccurs="1" name="data" type="xs:anyType">-->
+            <xs:element minOccurs="1" name="data" type="RequestDataData">
+                <xs:annotation>
+                    <xs:documentation>Объект бизнес данные сообщения (формат определяется системой получателя
+                        сообщения)
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="RequestDataData">
+        <xs:restriction base="xs:string"></xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="SyncSendMessageResponse">
+        <xsd:annotation>
+            <xsd:documentation>информация о сообщении ответе</xsd:documentation>
+        </xsd:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="1" name="responseInfo" type="SyncMessageInfoResponse">
+                <xs:annotation>
+                    <xs:documentation>Мета данные ответа</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xsd:element minOccurs="1" name="responseData" type="ResponseData">
+                <xsd:annotation>
+                    <xsd:documentation>Объект бизнес данные ответа</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xsd:complexType name="ResponseData">
+        <xsd:sequence>
+            <xsd:element minOccurs="0" name="data" type="xsd:anyType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xs:complexType name="SyncMessageInfoResponse">
+        <xs:sequence>
+            <xs:element minOccurs="1" name="messageId" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Идентификатор сообщения</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="1" name="correlationId" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Идентификатор цепочки сообщения</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="1" name="responseDate" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation>Дата ответа</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="1" name="status" type="StatusInfo">
+                <xsd:annotation>
+                    <xsd:documentation>Объект информации о статусе</xsd:documentation>
+                </xsd:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="sessionId" type="Guid">
+                <xs:annotation>
+                    <xs:documentation>Идентификатор сессии ШЭП</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xsd:complexType name="StatusInfo">
+        <xsd:annotation>
+            <xsd:documentation>Статус</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:element minOccurs="1" name="code" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>Код статуса</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="1" name="message">
+                <xsd:annotation>
+                    <xsd:documentation>Сообщение о статусе</xsd:documentation>
+                </xsd:annotation>
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:string">
+                        <xsd:maxLength value="250"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="ErrorInfo">
+        <xsd:sequence>
+            <xsd:element minOccurs="1" name="errorCode" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>Код ошибки</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="1" name="errorMessage" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>Сообщение ошибки</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="errorData" type="xsd:string">
+                <xsd:annotation>
+                    <xsd:documentation>Дополнительное описание ошибки</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="1" name="errorDate" type="xsd:dateTime">
+                <xsd:annotation>
+                    <xsd:documentation>Дата ошибки</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+            <xsd:element minOccurs="0" name="subError" type="ErrorInfo">
+                <xsd:annotation>
+                    <xsd:documentation>Дочерняя ошибка</xsd:documentation>
+                </xsd:annotation>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+
+</xs:schema>

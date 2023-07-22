@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:14.1-alpine
+    container_name: isna-postgre
+    restart: always
+    environment:
+      - POSTGRES_USER=usr
+      - POSTGRES_PASSWORD=pwd
+      - POSTGRES_DB=demoDB
+    ports:
+      - '5430:5432'
+    volumes:
+      -  isna-data:/var/lib/postgresql/data
+      -  ./init.sql:/docker-entrypoint-initdb.d/init.sql
+volumes:
+  isna-data:
+    driver: local

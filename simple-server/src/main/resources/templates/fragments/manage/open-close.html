@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container" th:fragment="open_close_form">
+    <div class="mt-3 row" id="settings">
+        <label class="col col-8 col-form-label">Выводить тестовую ошибку при проверке:</label>
+        <div class="col col-4 form-check">
+            <input class="form-check-input" type="checkbox" value="" id="RaiseTestError"
+                   onclick="setCheckName('RaiseTestError');">
+            <label class="form-check-label" for="CheckUniqueMessageId" id="lblRaiseTestError"></label>
+        </div>
+        <label class="col col-8 col-form-label">Проверять уникальность сообщения:</label>
+        <div class="col col-4 form-check">
+            <input class="form-check-input" type="checkbox" value="" id="CheckUniqueMessageId"
+                   onclick="setCheckName('CheckUniqueMessageId');">
+            <label class="form-check-label" for="CheckUniqueMessageId" id="lblCheckUniqueMessageId"></label>
+        </div>
+        <label class="col col-8 col-form-label">Проверять уникальность референса:</label>
+        <div class="col col-4 form-check">
+            <input class="form-check-input" type="checkbox" value="" id="CheckUniqueReference"
+                   onclick="setCheckName('CheckUniqueReference');">
+            <label class="form-check-label" for="CheckUniqueReference" id="lblCheckUniqueReference"></label>
+        </div>
+        <label class="col col-8 col-form-label">Проверять статус счёта:</label>
+        <div class="col col-4 form-check">
+            <input class="form-check-input" type="checkbox" value="" id="ValidateAccountState"
+                   onclick="setCheckName('ValidateAccountState');">
+            <label class="form-check-label" for="ValidateAccountState" id="lblValidateAccountState"></label>
+        </div>
+        <label class="col col-8 col-form-label">Проверять дату операции:</label>
+        <div class="col col-4 form-check">
+            <input class="form-check-input" type="checkbox" value="" id="ValidateOperationDate"
+                   onclick="setCheckName('ValidateOperationDate');">
+            <label class="form-check-label" for="ValidateOperationDate" id="lblValidateOperationDate"></label>
+        </div>
+        <label class="col col-8 col-form-label">Использовать фиксированный референс:</label>
+        <div class="col col-4 form-check">
+            <div class="row">
+                <div class="col-5">
+                    <input class="form-check-input" type="checkbox" value="" id="UseFixReference"
+                           onclick="setCheckName('UseFixReference');">
+                    <label class="form-check-label" for="UseFixReference" id="lblUseFixReference"></label>
+                </div>
+                <div class="col-7">
+                    <input class="form-control form-control-sm" id="FixReference">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <div class="col col-2">
+            <button type="button" class="btn btn-sm btn-secondary" onclick="save();">Установить</button>
+        </div>
+        <div class="col col-2">
+            <button type="button" class="btn btn-sm btn-light" onclick="location.reload();">Сбросить</button>
+        </div>
+    </div>
+    <script src="/js/manage_openclose.js"></script>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,1 @@
+docker-compose -f build-pg.yml up

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head th:include="fragments/general.html :: header(title='Ошибка '+${code})">
+    <title>Главная</title>
+</head>
+<body>
+
+<nav th:replace="fragments/general.html :: menu(page='error', mode='')">
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h2 th:text="'Ошибка '+${code}+': '+${name}">Ошибка</h2>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

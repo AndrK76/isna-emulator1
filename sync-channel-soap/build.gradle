@@ -1,0 +1,55 @@
+plugins {
+    id 'java-library'
+    id 'io.spring.dependency-management'
+}
+
+
+version = '1.0.0'
+sourceCompatibility = JavaVersion.VERSION_11
+
+configurations {
+    jaxb
+}
+
+dependencies {
+    implementation 'wsdl4j:wsdl4j'
+    implementation 'org.springframework.boot:spring-boot-starter-web-services'
+    jaxb("org.glassfish.jaxb:jaxb-xjc")
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+            srcDir 'build/generated-sources/jaxb'
+        }
+    }
+}
+
+compileJava.options.encoding = 'UTF-8'
+tasks.withType(JavaCompile) {
+    options.with {
+        encoding = 'UTF-8'
+    }
+}
+
+task genJaxb {
+    ext.schemaDir = "${projectDir}/src/main/resources"
+
+    ext.sourcesDir = "${buildDir}/generated-sources/jaxb"
+    outputs.dir sourcesDir
+
+    doLast() {
+        project.ant {
+            taskdef name: "xjc", classname: "com.sun.tools.xjc.XJCTask",
+                    classpath: configurations.jaxb.asPath
+            mkdir(dir: sourcesDir)
+
+            xjc(destdir: sourcesDir, encoding: "UTF-8") {
+                schema(dir: schemaDir, includes: "**/*.xsd")
+                arg(value: "-wsdl")
+                produces(dir: sourcesDir, includes: "**/*.java")
+            }
+        }
+    }
+}

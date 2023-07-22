@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head th:include="fragments/general.html :: header(title='Статистика ::'+ ${modeName})">
+    <title>Главная</title>
+</head>
+<body>
+
+<nav th:replace="fragments/general.html :: menu(page='list', mode=${mode})">
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col text-center">
+            <h2 th:text="'Статистика: '+${modeName}">Статистика</h2>
+        </div>
+
+        <script>
+            const apiUrl = '/api/' + '[[${restApiVersion}]]';
+            var perPage =  [[${perPage}]];
+        </script>
+
+        <div class="row row-cols-sm-auto g-2 align-items-center">
+            <div class="col-12 me-5">
+                <button class="btn btn-sm btn-light" type="button" id="btPrev" disabled>Новее</button>
+                <button class="btn btn-sm btn-light" type="button" id="btNext" disabled>Старше</button>
+            </div>
+            <div class="col-12">
+                <div class="input-group w-75">
+                    <span class="input-group-text-sm me-1">Показывать по:</span>
+                    <input type="number" class="form-control form-control-sm" id="perPage" value="33">
+                    <button class="btn btn-sm btn-secondary" type="button" id="btPerPage">Применить</button>
+                </div>
+            </div>
+        </div>
+        <script src="/js/list_common.js"></script>
+        <div th:if="${mode} == 'general'">
+            <div th:replace="fragments/list/all.html :: all_table"/>
+        </div>
+
+        <div th:if="${mode} == 'open-close'">
+            <div th:replace="fragments/list/open-close.html :: open_close_table"/>
+        </div>
+
+
+    </div>
+
+</div>
+
+</body>
+</html>

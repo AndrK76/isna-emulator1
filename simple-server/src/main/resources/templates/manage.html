@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head th:include="fragments/general.html :: header(title='Управление ::'+ ${modeName})">
+    <title>Главная</title>
+</head>
+<body>
+
+<nav th:replace="fragments/general.html :: menu(page='manage', mode=${mode})">
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col text-center">
+            <h2 th:text="'Управление: '+${modeName}">Управление</h2>
+        </div>
+
+        <script>
+            const apiUrl = '/api/' + '[[${restApiVersion}]]';
+            const serviceName = '[[${serviceName}]]';
+        </script>
+    </div>
+</div>
+
+<div th:if="${mode} == 'open-close'">
+    <div th:replace="fragments/manage/open-close.html :: open_close_form"/>
+</div>
+
+
+</body>
+</html>
